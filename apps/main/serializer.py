@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from apps.main.models import Settings, Main, About, Contact, Form
+from apps.main.models import Settings, Main, About, Contact, Form, ProductImage, Products
 
 class SettingsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -25,3 +25,24 @@ class FormSerializer(serializers.ModelSerializer):
     class Meta:
         model = Form
         fields = "__all__"
+
+class ProductImageSerializer(serializers.ModelSerializer):
+    image =serializers.ImageField()
+    
+    class Meta:
+        model = ProductImage
+        fields = ['image', 'position']
+
+class ProductImageSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField()
+    
+    class Meta:
+        model = ProductImage
+        fields = ['image', 'position']
+        
+class ProductSerializer(serializers.ModelSerializer):
+    product_image = ProductImageSerializer(many=True, read_only=True)
+    
+    class Meta:
+        model = Products
+        fields = ['id', 'title', 'description', 'price', 'is_active', 'product_image', 'created_at']
